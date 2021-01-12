@@ -1,0 +1,40 @@
+#!/usr/bin/env python3
+import logging
+import pdb
+import sys
+
+from gitmergedeps.differ import (differ,
+                                 merger)
+import requirements
+
+
+def main():
+    logging.basicConfig(level=logging.DEBUG, format='%(message)s')
+    logging.debug(" ".join(sys.argv))
+    base_file = sys.argv[1]
+    other_file = sys.argv[2]
+    current_file = sys.argv[3]
+
+    base_requirements = parse_pip_file(base_file)
+    other_requirements = parse_pip_file(other_file)
+    current_requirements = parse_pip_file(current_file)
+
+    try:
+        diff = differ(base_requirements, other_requirements)
+        logging.debug("diff: %r", diff)
+        merged = merger(current_requirements, diff)
+    except Exception as e:
+        pdb.post_mortem(e.__traceback__)
+        sys.exit(1)
+
+    with open(other_file, 'w') as out:
+        out.write(merged)
+
+
+def parse_pip_file(filename):
+    with open(filename, 'r') as fd:
+        return [parse_req(req_line) for req_line in fd.readlines()]
+
+
+if __name__ == '__main__':
+    main()
