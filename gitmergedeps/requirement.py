@@ -18,10 +18,10 @@ NAME_VERSION_REQ_REGEX = re.compile(
 VCS_REGEX = re.compile(
     r'^(?P<scheme>{0})://'.format(r'|'.join(
         [scheme.replace('+', r'\+') for scheme in VCS_SCHEMES])) +
-    r'(?:(?P<login>[^/@]+)@)?'
+    r'((?P<login>[^/@]+)@)?'
     r'(?P<path>[^#@]+)'
-    r'(?:@(?P<revision>[^#]+))?'
-    r'(?:#(?P<fragment>\S+))?'
+    r'(@(?P<revision>[^#]+))?'
+    r'(#(?P<fragment>\S+))?'
 )
 
 
@@ -32,6 +32,7 @@ class Requirement:
         self._constraint = None
         self._version = None
         self._revision = None
+        self.fragment = None
 
         matches = re.match(NAME_REQ_REGEX, self.line)
         if matches:
@@ -47,6 +48,7 @@ class Requirement:
         if matches:
             self.name = f"{matches['scheme']}://{matches['path']}"
             self._revision = matches['revision']
+            self.fragment = matches['fragment']
 
     def __repr__(self):
         return self.line
@@ -57,7 +59,13 @@ class Requirement:
 
     @version.setter
     def version(self, new_value):
-        self.line = self.line.replace(self.version, new_value)
+        if self.version:
+            self.line = self.line.replace(self.version, new_value)
+        elif self.fragment:
+            version_and_fragment = f"@{new_value}{self.fragment}"
+            self.line = self.line.replace(self.fragment, version_and_fragment)
+        else:
+            self.line += f"@{new_value}"
         self._version = new_value
 
     @property
