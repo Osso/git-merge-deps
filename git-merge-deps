@@ -3,9 +3,9 @@ import logging
 import pdb
 import sys
 
-from gitmergedeps.differ import (differ,
-                                 merger)
-import requirements
+from gitmergedeps.differ import differ
+from gitmergedeps.merger import merger
+from gitmergedeps.requirement import parse_requirements
 
 
 def main():
@@ -33,7 +33,7 @@ def main():
 
 def parse_pip_file(filename):
     with open(filename, 'r') as fd:
-        return [parse_req(req_line) for req_line in fd.readlines()]
+        return parse_requirements(fd.read())
 
 
 if __name__ == '__main__':
