@@ -59,10 +59,11 @@ class Requirement:
 
     @version.setter
     def version(self, new_value):
-        if new_value is None and self.version:
-            self.line = self.line.replace(self.version, "")
-        else:
-            self.line = self.line.replace(self.version, new_value)
+        if self.version:
+            self.line = self.line.replace(self.version, new_value if new_value else "")
+        elif new_value:
+            self.line += new_value
+
         self._version = new_value
 
     @property
@@ -90,7 +91,7 @@ class Requirement:
         if self.constraint:
             self.line = self.line.replace(self.constraint, new_value if new_value else "")
         else:
-            self.line = self.line.replace(self.name, new_value)
+            self.line += new_value
         self._constraint = new_value
 
 
