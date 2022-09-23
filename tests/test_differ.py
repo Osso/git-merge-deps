@@ -2,12 +2,12 @@ from gitmergedeps.differ import (AddDep,
                                  RemoveDep,
                                  UpdateVersion,
                                  differ)
-import requirements
+from gitmergedeps.requirement import parse_requirements
 
 
 def test_add():
-    old = list(requirements.parse(""))
-    new = list(requirements.parse("new-dep"))
+    old = list(parse_requirements(""))
+    new = list(parse_requirements("new-dep"))
     diff = differ(old, new)
     assert len(diff) == 1
     assert isinstance(diff[0], AddDep)
@@ -15,8 +15,8 @@ def test_add():
 
 
 def test_remove():
-    old = list(requirements.parse("new-dep"))
-    new = list(requirements.parse(""))
+    old = list(parse_requirements("new-dep"))
+    new = list(parse_requirements(""))
     diff = differ(old, new)
     assert len(diff) == 1
     assert isinstance(diff[0], RemoveDep)
@@ -24,8 +24,8 @@ def test_remove():
 
 
 def test_update():
-    old = list(requirements.parse("new-dep==0.1"))
-    new = list(requirements.parse("new-dep==0.2"))
+    old = list(parse_requirements("new-dep==0.1"))
+    new = list(parse_requirements("new-dep==0.2"))
     diff = differ(old, new)
     assert len(diff) == 1
     assert isinstance(diff[0], UpdateVersion)
@@ -33,8 +33,8 @@ def test_update():
 
 
 def test_update_older():
-    old = list(requirements.parse("new-dep==0.2"))
-    new = list(requirements.parse("new-dep==0.1"))
+    old = list(parse_requirements("new-dep==0.2"))
+    new = list(parse_requirements("new-dep==0.1"))
     diff = differ(old, new)
     assert len(diff) == 1
     assert isinstance(diff[0], UpdateVersion)
