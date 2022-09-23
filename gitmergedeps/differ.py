@@ -48,7 +48,9 @@ class UpdateVersion(DiffEl):
                 req.version = self.req.version
 
         else:
-            assert False
+            req.constraint = None
+            req.revision = None
+            req.version = None
 
 
 class RemoveDep(DiffEl):

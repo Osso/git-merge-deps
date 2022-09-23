@@ -11,6 +11,7 @@ from gitmergedeps.requirement import parse_requirements
                          ("new-dep==0.1", "new-dep==0.2", "new-dep==0.2"),
                          ("new-dep==0.2", "new-dep==0.1", "new-dep==0.2"),
                          ("new-dep<=0.1", "new-dep==0.2", "new-dep==0.2"),
+                         ("new-dep==0.1", "new-dep", "new-dep"),
                          ("dep==1.1.2", "dep==1.1.0", "dep==1.1.2"),
                          ("# comment\ndep==1 # c2", "# comment\ndep==2 # c2", "# comment\ndep==2 # c2"),
                          ("dep[opt]==0.1", "dep[opt]==0.2", "dep[opt]==0.2"),
