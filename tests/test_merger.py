@@ -13,7 +13,8 @@ from gitmergedeps.requirement import parse_requirements
                          ("new-dep<=0.1", "new-dep==0.2", "new-dep==0.2"),
                          ("dep==1.1.2", "dep==1.1.0", "dep==1.1.2"),
                          ("# comment\ndep==1 # c2", "# comment\ndep==2 # c2", "# comment\ndep==2 # c2"),
-                         ("dep[opt]==0.1", "dep[opt]==0.2", "dep[opt]==0.2")])
+                         ("dep[opt]==0.1", "dep[opt]==0.2", "dep[opt]==0.2"),
+                         ("git+ssh://git@url.git#egg=fragment", "git+ssh://git@url.git@1.0#egg=fragment", "git+ssh://git@url.git@1.0#egg=fragment")])
 def test_merge(old, new, expected):
     old_req = parse_requirements(old)
     new_req = parse_requirements(new)
