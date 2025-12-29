@@ -1,0 +1,13 @@
+[package]
+name = "git-merge-deps"
+version = "0.1.0"
+edition = "2021"
+description = "Git merge driver for pip requirements files"
+
+[dependencies]
+regex = "1"
+semver = "1"
+
+[profile.release]
+lto = true
+strip = true

@@ -1,2 +1,2 @@
-gitmergedeps.egg-info
-__pycache__
+/target
+*.pkg.tar.zst
