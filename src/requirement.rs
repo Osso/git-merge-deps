@@ -13,8 +13,7 @@ static VCS_REGEX: LazyLock<Regex> = LazyLock::new(|| {
     .unwrap()
 });
 
-static NAME_REGEX: LazyLock<Regex> =
-    LazyLock::new(|| Regex::new(r"^(?P<name>[\w_-]+)").unwrap());
+static NAME_REGEX: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^(?P<name>[\w_-]+)").unwrap());
 
 #[derive(Debug, Clone)]
 pub struct Requirement {

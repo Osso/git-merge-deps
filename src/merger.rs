@@ -10,11 +10,8 @@ fn version_greater(a: &str, b: &str) -> bool {
     }
 
     // Fall back to simple numeric comparison (e.g., "1.0" vs "2.0")
-    let parse_parts = |s: &str| -> Vec<u64> {
-        s.split('.')
-            .filter_map(|p| p.parse().ok())
-            .collect()
-    };
+    let parse_parts =
+        |s: &str| -> Vec<u64> { s.split('.').filter_map(|p| p.parse().ok()).collect() };
 
     let parts_a = parse_parts(a);
     let parts_b = parse_parts(b);
